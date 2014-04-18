@@ -44,9 +44,9 @@ exports.scrape = function (callback) {
 	require('../lib/json_requester').get(
 		{
 			urls: {
-				sessions: 'https://re-publica.de/event/1/sessions.json',
-				speakers: 'https://re-publica.de/event/1/speakers.json',
-				rooms:    'https://re-publica.de/event/1/rooms.json'
+				sessions: 'http://re-publica.de/event/1/sessions.json',
+				speakers: 'http://re-publica.de/event/1/speakers.json',
+				rooms:    'http://re-publica.de/event/1/rooms.json'
 			}
 		},
 		function (result) {
@@ -186,14 +186,18 @@ function parseDate(text) {
 function parseDateTime(date, time) {
 	if ((date == '') && (time == '')) return false;
 
-	var dateMatcher = /(\d\d)\.(\d\d)\.(\d\d\d\d) - (\d\d)\:(\d\d)/;
+	var dateMatcher = /^(\d\d)\.(\d\d)\.(\d\d\d\d) /;
 	dateMatcher.exec(date);
+
 
 	var day = RegExp.$1;
 	var month = RegExp.$2;
 	var year = RegExp.$3;
-	var hour = RegExp.$4;
-	var minute = RegExp.$5;
+
+	var timeMatcher = /(\d\d)\:(\d\d)/
+	timeMatcher.exec(time);
+	var hour = RegExp.$1;
+	var minute = RegExp.$2;
 
 	return new Date(year, month, day, hour, minute, 0, 0);
 
