@@ -2,6 +2,46 @@ var Browser = require("zombie");
 var sessionURL = "https://re-publica.de/event/1/sessions";
 var urlPrefix = "https://14.re-publica.de";
 var rp14 = require('./rp14Common');
+var async = require('async');
+var fs = require('fs');
+
+Browser.loadCSS = false;
+Browser.runScripts = false;
+Browser.maxWait = 10;
+
+var updateSpeakers = false;
+
+function scrapeSpeaker(browser, speakerJSON, callback) {
+
+  // console.log("scrape " + speakerJSON.name);
+  var url = speakerJSON['url'];
+  // console.log(url);
+  browser.visit(url, function () {
+    console.log("-> " + url);
+    console.log("-> " + browser.document);
+    var viewContent = browser.body.querySelector(".view-content");
+
+    var img = viewContent.querySelector(".views-field-field-profile-picture img");
+    var imgURL = img.attributes['src'].value;
+    speakerJSON['photo'] = imgURL;
+
+    var jobTitle = viewContent.querySelector(".views-field-field-profile-job-title");
+    if (jobTitle != null) speakerJSON['position'] = jobTitle.textContent.trim();
+
+    var organisation = viewContent.querySelector(".views-field-field-profile-organization");
+    if (organisation != null) speakerJSON['organization'] = organisation.textContent.trim();
+
+    var about = viewContent.querySelector(".views-field-field-profile-vita")
+    if (about != null) speakerJSON['biography'] = about.textContent.trim();
+
+
+
+    // var image  = browser.queryAll(".views-field-field-profile-picture img").items(0);
+    console.log(speakerJSON);
+
+    callback(null, speakerJSON);
+  });
+};
 
 function getSpeakersFromNode(node) {
   if (node == null || node == undefined) return [];
@@ -106,6 +146,10 @@ function getTrackFromName(trackName) {
 
 exports.scrape = function (callback) {
   var browser = new Browser();
+  browser.loadCSS = false;
+  browser.maxWait = 10;
+  browser.runScripts = false;
+
 
   var data = [];
 
@@ -207,20 +251,49 @@ exports.scrape = function (callback) {
        }
      }); // rows
 
+
      alsoAdd('track', rp14.allTracks);
      alsoAdd('format', rp14.allFormats);
      alsoAdd('level', rp14.allLevels);
      alsoAdd('language', rp14.allLanguages);
      alsoAdd('day', rp14.allDays);
-     alsoAdd('speaker', allSpeakers);
+
+
+
      alsoAdd('location', allLocations);
 
      console.log("events = " + count);
 
+     if (updateSpeakers) {
 
-     console.log(data);
+       var speakers = [];
+       for (var id in allSpeakers) {
+         speakers.push(allSpeakers[id]);
+       }
+       async.mapLimit(speakers,
+                       1,
+                       function(item, callback) {
+                          scrapeSpeaker(browser, item, callback);
+                       },
+                       function(err, results) {
+                          alsoAdd('speaker', results);
 
-     callback(data);
+                          callback(data);
+                       });
+    } else {
+      // read speakers from json
+      var path = '../web/data/rp14/speakers.json';
+      fs.readFile(path, function(err, jsonData) {
+        if (!err) {
+          var results = JSON.parse(jsonData);
+          alsoAdd('speaker', results);
+
+          callback(data);
+        } else {
+          console.log(err);
+        }
+      });
+
+    }
   });
-
 };

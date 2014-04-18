@@ -1,12 +1,12 @@
 var eventId = 'rp14';
 
 var allTracks = {
-  'Business & Innovation':  { id:'business-innovation', label_de:'Business & Innovation',  label_en:'Business & Innovation', color:[194.0, 56.0, 24.0, 1.0] },
-  'Science & Technology':   { id:'science-technology',  label_de:'Wissenschaft & Technik', label_en:'Science & Technology' , color:[0.0, 0.0, 0.0, 1.0] },
-  'Politics & Society':     { id:'politics-society',    label_de:'Politik & Gesellschaft', label_en:'Politics & Society'   , color:[111.0, 79.0, 132.0, 1.0] },
+  'Business & Innovation':  { id:'business-innovation', label_de:'Business & Innovation',  label_en:'Business & Innovation', color:[211.0, 0.0, 0.0, 1.0] },
+  'Science & Technology':   { id:'science-technology',  label_de:'Wissenschaft & Technik', label_en:'Science & Technology' , color:[164.0, 152.0, 1.0, 1.0] },
+  'Politics & Society':     { id:'politics-society',    label_de:'Politik & Gesellschaft', label_en:'Politics & Society'   , color:[120.0, 66.0, 134.0, 1.0] },
   'Research & Education':   { id:'research-education',  label_de:'Forschung & Bildung',    label_en:'Research & Education' , color:[0.0, 0.0, 0.0, 1.0] },
-  'Culture':                { id:'culture',             label_de:'Kultur',                 label_en:'Culture'              , color:[193.0, 117.0, 28.0, 1.0] },
-  'Media':                  { id:'media',               label_de:'Medien',                 label_en:'Media'                , color:[78.0, 144.0, 178.0, 1.0] },
+  'Culture':                { id:'culture',             label_de:'Kultur',                 label_en:'Culture'              , color:[205.0, 113.0, 0.0, 1.0] },
+  'Media':                  { id:'media',               label_de:'Medien',                 label_en:'Media'                , color:[57.0, 143.0, 182.0, 1.0] },
   're:publica':             { id:'republica',           label_de:'re:publica',             label_en:'re:publica'           , color:[0.0, 0.0, 0.0, 1.0] },
   're:campaign':            { id:'recampaign',          label_de:'re:campaign',            label_en:'re:campaign'          , color:[0.0, 0.0, 0.0, 1.0] },
   'Other':                  { id:'other',               label_de:'Other',                  label_en:'Other'                , color:[101.0, 156.0, 45.0, 1.0] }
