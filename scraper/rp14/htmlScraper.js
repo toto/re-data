@@ -10,21 +10,21 @@ Browser.runScripts = false;
 Browser.maxWait = 10;
 
 var updateSpeakers = false;
-
-function scrapeSession(browser, sessionJSON, callback) {
-  var url = sessionJSON['url'];
-
-  browser.visit(url, function () {
-    var viewContent = browser.body.querySelector(".view-content");
-    var shortDesc = viewContent.querySelector(".field-name-field-session-short-thesis .field-item");
-    sessionJSON['abstract'] = shortDesc.textContent.trim();
-
-    var fullDesc = viewContent.querySelector(".field-name-field-session-description .field-item");
-    sessionJSON['description'] = fullDesc.textContent.trim();
-
-    callback(null, sessionJSON);
-  };
-}
+// 
+// function scrapeSession(browser, sessionJSON, callback) {
+//   var url = sessionJSON['url'];
+// 
+//   browser.visit(url, function () {
+//     var viewContent = browser.body.querySelector(".view-content");
+//     var shortDesc = viewContent.querySelector(".field-name-field-session-short-thesis .field-item");
+//     sessionJSON['abstract'] = shortDesc.textContent.trim();
+// 
+//     var fullDesc = viewContent.querySelector(".field-name-field-session-description .field-item");
+//     sessionJSON['description'] = fullDesc.textContent.trim();
+// 
+//     callback(null, sessionJSON);
+//   };
+// }
 
 function scrapeSpeaker(browser, speakerJSON, callback) {
 
