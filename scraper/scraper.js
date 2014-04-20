@@ -11,7 +11,8 @@ var log = require(path.resolve(__dirname, '../api/lib/log.js'));
 async.eachSeries(
 	[
 		{ module:require('./rp13/scraper.js'), db:true },
-		{ module:require('./rp14/scraper.js'), db:false }
+		// { module:require('./rp14/scraper.js'), db:true }
+		{ module:require('./rp14/htmlScraper.js'), db:true }
 	],
 	function (item, callback) {
 		item.module.scrape(function (data) {

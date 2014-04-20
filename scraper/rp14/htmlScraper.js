@@ -11,6 +11,21 @@ Browser.maxWait = 10;
 
 var updateSpeakers = false;
 
+function scrapeSession(browser, sessionJSON, callback) {
+  var url = sessionJSON['url'];
+
+  browser.visit(url, function () {
+    var viewContent = browser.body.querySelector(".view-content");
+    var shortDesc = viewContent.querySelector(".field-name-field-session-short-thesis .field-item");
+    sessionJSON['abstract'] = shortDesc.textContent.trim();
+
+    var fullDesc = viewContent.querySelector(".field-name-field-session-description .field-item");
+    sessionJSON['description'] = fullDesc.textContent.trim();
+
+    callback(null, sessionJSON);
+  };
+}
+
 function scrapeSpeaker(browser, speakerJSON, callback) {
 
   // console.log("scrape " + speakerJSON.name);
@@ -183,6 +198,7 @@ exports.scrape = function (callback) {
       return newObj;
     }
 
+    var allSessions = [];
 
     // console.log(rows);
     rows.forEach(function(row) {
@@ -228,9 +244,7 @@ exports.scrape = function (callback) {
          'links': []
        }
 
-
-
-       addEntry('session', entry);
+       allSessions.push(entry);
 
        var sessionForSpeaker = { 'id': entry['id'],
                                  'title': entry['title'] };
@@ -251,49 +265,56 @@ exports.scrape = function (callback) {
        }
      }); // rows
 
-
      alsoAdd('track', rp14.allTracks);
      alsoAdd('format', rp14.allFormats);
      alsoAdd('level', rp14.allLevels);
      alsoAdd('language', rp14.allLanguages);
      alsoAdd('day', rp14.allDays);
-
-
-
      alsoAdd('location', allLocations);
+     alsoAdd('session', allSessions);
+
+// addEntry('session', entry);
 
      console.log("events = " + count);
 
-     if (updateSpeakers) {
-
-       var speakers = [];
-       for (var id in allSpeakers) {
-         speakers.push(allSpeakers[id]);
-       }
-       async.mapLimit(speakers,
-                       1,
-                       function(item, callback) {
-                          scrapeSpeaker(browser, item, callback);
-                       },
-                       function(err, results) {
-                          alsoAdd('speaker', results);
-
-                          callback(data);
-                       });
-    } else {
-      // read speakers from json
-      var path = '../web/data/rp14/speakers.json';
-      fs.readFile(path, function(err, jsonData) {
-        if (!err) {
-          var results = JSON.parse(jsonData);
-          alsoAdd('speaker', results);
-
-          callback(data);
-        } else {
-          console.log(err);
-        }
-      });
-
-    }
+    updateSpeakers(updateSpeakers, function() {
+      callback(data);
+    });
   });
 };
+
+function updateSpeakers(shouldScrape, callback) {
+
+
+   if (shouldScrape) {
+
+     var speakers = [];
+     for (var id in allSpeakers) {
+       speakers.push(allSpeakers[id]);
+     }
+     async.mapLimit(speakers,
+                     1,
+                     function(item, callback) {
+                        scrapeSpeaker(browser, item, callback);
+                     },
+                     function(err, results) {
+                        alsoAdd('speaker', results);
+
+                        callback();
+                     });
+  } else {
+    // read speakers from json
+    var path = '../web/data/rp14/speakers.json';
+    fs.readFile(path, function(err, jsonData) {
+      if (!err) {
+        var results = JSON.parse(jsonData);
+        alsoAdd('speaker', results);
+
+        callback();
+      } else {
+        console.log(err);
+      }
+    });
+
+  }
+}
