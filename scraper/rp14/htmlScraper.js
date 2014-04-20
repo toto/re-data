@@ -10,18 +10,18 @@ Browser.runScripts = false;
 Browser.maxWait = 10;
 
 var updateSpeakers = false;
-// 
+//
 // function scrapeSession(browser, sessionJSON, callback) {
 //   var url = sessionJSON['url'];
-// 
+//
 //   browser.visit(url, function () {
 //     var viewContent = browser.body.querySelector(".view-content");
 //     var shortDesc = viewContent.querySelector(".field-name-field-session-short-thesis .field-item");
 //     sessionJSON['abstract'] = shortDesc.textContent.trim();
-// 
+//
 //     var fullDesc = viewContent.querySelector(".field-name-field-session-description .field-item");
 //     sessionJSON['description'] = fullDesc.textContent.trim();
-// 
+//
 //     callback(null, sessionJSON);
 //   };
 // }
@@ -102,7 +102,10 @@ function getIdFromSessionLinkPath(path) {
 function getDayFromBeginTime(begin) {
   if (!begin || begin.getDate() == undefined) return false;
 
-  var dayString = "0" + begin.getDate() + ".0" + (begin.getMonth() + 1) + "." + begin.getFullYear();
+  var getDateString = begin.getDate() < 10 ? "0" + begin.getDate() : begin.getDate();
+
+
+  var dayString = getDateString + ".0" + (begin.getMonth() + 1) + "." + begin.getFullYear();
   var result = rp14.allDays[dayString];
   if (result == undefined) {
     console.log("unknown day " + dayString);
@@ -243,8 +246,9 @@ exports.scrape = function (callback) {
          'enclosures': [],
          'links': []
        }
-
-       allSessions.push(entry);
+       if (entry.day) {
+        addEntry('session', entry);
+       }
 
        var sessionForSpeaker = { 'id': entry['id'],
                                  'title': entry['title'] };
@@ -271,7 +275,6 @@ exports.scrape = function (callback) {
      alsoAdd('language', rp14.allLanguages);
      alsoAdd('day', rp14.allDays);
      alsoAdd('location', allLocations);
-     alsoAdd('session', allSessions);
 
 // addEntry('session', entry);
 
