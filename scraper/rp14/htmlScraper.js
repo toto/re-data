@@ -277,44 +277,36 @@ exports.scrape = function (callback) {
 
      console.log("events = " + count);
 
-    updateSpeakers(updateSpeakers, function() {
-      callback(data);
-    });
+     if (updateSpeakers) {
+
+       var speakers = [];
+       for (var id in allSpeakers) {
+         speakers.push(allSpeakers[id]);
+       }
+       async.mapLimit(speakers,
+                       1,
+                       function(item, callback) {
+                          scrapeSpeaker(browser, item, callback);
+                       },
+                       function(err, results) {
+                          alsoAdd('speaker', results);
+
+                          callback(data);
+                       });
+    } else {
+      // read speakers from json
+      var path = '../web/data/rp14/speakers.json';
+      fs.readFile(path, function(err, jsonData) {
+        if (!err) {
+          var results = JSON.parse(jsonData);
+          alsoAdd('speaker', results);
+
+          callback(data);
+        } else {
+          console.log(err);
+        }
+      });
+
+    }
   });
 };
-
-function updateSpeakers(shouldScrape, callback) {
-
-
-   if (shouldScrape) {
-
-     var speakers = [];
-     for (var id in allSpeakers) {
-       speakers.push(allSpeakers[id]);
-     }
-     async.mapLimit(speakers,
-                     1,
-                     function(item, callback) {
-                        scrapeSpeaker(browser, item, callback);
-                     },
-                     function(err, results) {
-                        alsoAdd('speaker', results);
-
-                        callback();
-                     });
-  } else {
-    // read speakers from json
-    var path = '../web/data/rp14/speakers.json';
-    fs.readFile(path, function(err, jsonData) {
-      if (!err) {
-        var results = JSON.parse(jsonData);
-        alsoAdd('speaker', results);
-
-        callback();
-      } else {
-        console.log(err);
-      }
-    });
-
-  }
-}
