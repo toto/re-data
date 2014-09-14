@@ -112,7 +112,7 @@ function parseSpeaker(speakerJSON) {
 	};
 	var imageHost = "http://events.ccc.de/congress/2013/Fahrplan";
 	if (speakerJSON.image) {
-		result['photo'] = imageHost + speakerJSON.image;
+		result['photo'] = imageHost + speakerJSON.image.replace(/\/(small|medium)\//, "/large/");
 	}
 	return result;
 };
