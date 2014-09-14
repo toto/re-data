@@ -110,7 +110,7 @@ function parseSpeaker(speakerJSON) {
 		"links": links,
 		"sessions": [] // fill me later
 	};
-	var imageHost = "https://events.ccc.de/congress/2013/Fahrplan";
+	var imageHost = "http://events.ccc.de/congress/2013/Fahrplan";
 	if (speakerJSON.image) {
 		result['photo'] = imageHost + speakerJSON.image;
 	}
