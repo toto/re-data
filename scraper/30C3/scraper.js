@@ -31,6 +31,18 @@ var allLanguages = {
 	'de': { id:'de', label_en:'German' },	
 };
 
+var trackColors = {
+	'other':                		[207,94,28,1],
+	'30c3-hardware-making': 		[78.0, 209.0, 249.0, 1.0],
+	'30c3-security-safety': 		[248.0, 154.0, 61.0, 1.0],
+	'30c3-ethics-society-politics': [246.0, 105.0, 106.0, 1.0],
+	'30c3-art-beauty':              [244.0, 79.0, 244.0, 1.0],
+	'30c3-science-engineering':     [197.0, 167.0, 59.0, 1.0],
+	'30c3-entertainment': 			[108.0, 196.0, 58.0, 1.0],
+	'30c3-music': 					[7.0, 68.0, 85.0, 1.0],
+	'30c3-dlf': 					[56.0, 196.0, 182.0, 1.0]
+};
+
 var data   = [];
 var eventId = "";
 var allDays = {};
@@ -98,7 +110,7 @@ function parseSpeaker(speakerJSON) {
 		"links": links,
 		"sessions": [] // fill me later
 	};
-	var imageHost = "http://cccv.pentabarf.org";
+	var imageHost = "https://events.ccc.de/congress/2013/Fahrplan";
 	if (speakerJSON.image) {
 		result['photo'] = imageHost + speakerJSON.image;
 	}
@@ -134,9 +146,16 @@ function parseEnd(dateString, durationString) {
 
 function parseTrackFromEvent(eventXML) {
 	var trackName = eventXML.track;
+	var trackID = mkID(trackName);
+	var color = trackColors[trackID];
+	if (!color) {
+		console.log("No track color for " + trackID);
+		color = trackColors["other"];
+	}
+	
 	return {
-		"id": mkID(trackName),
-		"color": [207,94,28,1],
+		"id": trackID,
+		"color": color,
 		"label_en": trackName.toString()
 	};
 };

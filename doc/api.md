@@ -152,7 +152,7 @@ An event is one chronologically delimited total of sessions. Like a yearly confe
 		{
 			"url": "http://example.com/files/live.m3u8",
 			"mimetype": "application/x-mpegURL",
-			"type": "livestream"
+			"type": "live"
 		},	
 		{
 			"url": "http://example.com/files/video.mp4",
