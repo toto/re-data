@@ -1070,8 +1070,6 @@ exports.scrape = function (callback) {
 									var recording = er.recordings.filter(function (rec, index, all) {
 										return rec.mime_type == "video/mp4" || rec.mime_type == "vnd.voc/h264-hd";
 									});
-											
-											
 									
 									return {
                                         "guid": er.guid,
@@ -1082,36 +1080,54 @@ exports.scrape = function (callback) {
 									};
 								});
 								
-                                var defaultTrack = {"id": mkID("other"),
-                                                    "color": [97.0,97.0,97.0,1.0], // grey
-                                                    "label_de": "Other",
-                                                    "label_en": "Other"};
+
 
                                 var streamMap = {};
                                 voc_streams.forEach(function (group) {
                                     if (group["conference"] == eventId.toUpperCase()) {
                                         if (group["group"] == "Lecture Rooms" || group["group"] == "Live Podcasts") {
                                             group.rooms.forEach(function (room) {
-                                                    console.log(room.schedulename);
                                                     room.streams.forEach(function (streamInfo) {
-                                                        if (streamInfo.type == "video" && (streamInfo.slug == "hd-native" || streamInfo.slug == "hd-stereo") && streamInfo.urls.hls) {
-                                                            var info = {
-                                                                "url": streamInfo.urls.hls.url,
-                                                                "type": "livestream",
-                                                                "mimetype": "video/mp4"
-                                                            };
+                                                        if ((streamInfo.type == "video" || streamInfo.type == "audio") &&
+                                                            (streamInfo.slug == "hd-native" || 
+                                                             streamInfo.slug == "hd-stereo" ||
+                                                            streamInfo.slug == "audio-native")) {
+                                                                
+                                                                if (streamInfo.urls.hls) {
+                                                                    var info = {
+                                                                        "url": streamInfo.urls.hls.url,
+                                                                        "type": "livestream",
+                                                                        "mimetype": "video/mp4"
+                                                                    };
                                                             
-                                                            var roomID = vocSlugToLocatonID[room.slug];
-                                                            if (roomID) {
-                                                                streamMap[roomID] = info;                                                                
+                                                                    var roomID = vocSlugToLocatonID[room.slug];
+                                                                    if (roomID) {
+                                                                        streamMap[roomID] = info;                                                                
+                                                                    }
+                                                                } else if (streamInfo.urls.mp3) {
+                                                                    var info = {
+                                                                        "url": streamInfo.urls.mp3.url,
+                                                                        "type": "livestream",
+                                                                        "mimetype": "video/mp4"
+                                                                    };
+                                                            
+                                                                    var roomID = vocSlugToLocatonID[room.slug];
+                                                                    if (roomID) {
+                                                                        streamMap[roomID] = info;                                                                
+                                                                    }
+                                                                }
                                                             }
-
-                                                        }
                                                     });
                                             });
                                         }
                                     } 
                                 });
+                                
+                                
+                                var defaultTrack = {"id": mkID("other"),
+                                                    "color": [97.0,97.0,97.0,1.0], // grey
+                                                    "label_de": "Other",
+                                                    "label_en": "Other"};                                
 
                                 // Extra Data from Wiki
                                 handleResult(additional_schedule, 
