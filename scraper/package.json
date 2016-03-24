@@ -1,10 +1,10 @@
 {
   "private": true,
   "name": "re-data-scraper",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "retrieve and convert dumps from various conferences to importable json",
   "dependencies": {
-    "MD5": "1.2.1",
+    "md5": "1.2.1",
     "async": "0.9.0",
     "cheerio": "0.18.0",
     "colors": "^1.1.2",
@@ -15,7 +15,10 @@
     "icalendar": "0.7.1",
     "moment": "2.2.1",
     "sanitize-html": "1.4.3",
-    "scrapyard": "0.0.8"
+    "scrapyard": "0.0.8",
+	"icalendar": "0.7.1",
+    "turf": "2.0.0",
+    "paper": "0.9.25"
   },
   "engines": {
     "node": "0.10.21"
