@@ -287,7 +287,7 @@ exports.scrape = function (callback) {
 				if (ytLink) {
 					links.push(ytLink);
 				}
-				if (session["video"]) {	
+				if (session.hasOwnProperty("video") && session.video instanceof Array) {	
 					
 					session.video.forEach(function (videoURL) {
 						
