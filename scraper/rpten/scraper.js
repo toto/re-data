@@ -5,8 +5,8 @@ var path = require('path');
 var parseCSV = require('csv-parse');
 
 // for debugging we can just pretend rpTEN was today
-var originalStartDate = new Date(2015, 4, 5, 9, 0, 0, 0);
-var fakeDate = new Date();
+var originalStartDate = new Date(2016, 4, 2, 9, 0, 0, 0);
+var fakeDate = originalStartDate; //new Date();
 var sessionStartDateOffsetMilliSecs = fakeDate.getTime() - originalStartDate.getTime();
 var removeTimesAndLocations = false;
 
@@ -136,8 +136,8 @@ exports.scrape = function (callback) {
 	require('../lib/json_requester').get(
 		{
 			urls: {
-				sessions: 'http://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553
-				speakers: 'http://re-publica.de/event/6553/json/speakers' // rpTEN id: 6553
+				sessions: 'http://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553 rp15: 3013
+				speakers: 'http://re-publica.de/event/6553/json/speakers' // rpTEN id: 6553 rp15: 3013
 			}
 		},
 		function (result) {
