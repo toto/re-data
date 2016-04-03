@@ -5,7 +5,8 @@ var path = require('path');
 var parseCSV = require('csv-parse');
 
 // for debugging we can just pretend rpTEN was today
-var originalStartDate = new Date(2016, 4, 2, 9, 0, 0, 0);
+var originalStartDate = new Date(2015, 4, 5, 9, 0, 0, 0); // rp15
+// var originalStartDate = new Date(2016, 4, 2, 9, 0, 0, 0); // rpTEN
 var fakeDate = originalStartDate; //new Date();
 var sessionStartDateOffsetMilliSecs = fakeDate.getTime() - originalStartDate.getTime();
 var removeTimesAndLocations = false;
@@ -52,17 +53,32 @@ var allLanguages = {
 	'Deutsch':          { id:'de',    label_de:'Deutsch',          label_en:'German'          }
 };
 
+// rp15
+// var allDays = {
+//     '05.05.2015': { 'id': eventId +'-day-1', 'label_de':'5. Mai',
+//                                              'label_en':'May 5',
+//                                              'date':'2015-05-05' },
+//     '06.05.2015': { 'id': eventId +'-day-2', 'label_de':'6. Mai',
+//                                              'label_en':'May 6',
+//                                              'date':'2015-05-06' },
+//     '07.05.2015': { 'id': eventId + '-day-3', 'label_de':'7. Mai',
+//                                               'label_en':'May 7',
+//                                               'date':'2015-05-07' },
+// };
+
+// rpTEN
 var allDays = {
-	'02.05.2016': { 'id': eventId +'-day-1', 'label_de':'2. Mai', 
-											 'label_en':'May 2', 
-											 'date':'2016-05-02' },
-	'03.05.2016': { 'id': eventId +'-day-2', 'label_de':'3. Mai', 
-											 'label_en':'May 3', 
-											 'date':'2016-05-03' },
-	'04.05.2016': { 'id': eventId + '-day-3', 'label_de':'4. Mai', 
-											  'label_en':'May 4', 
-											  'date':'2016-05-04' },
+    '02.05.2016': { 'id': eventId +'-day-1', 'label_de':'2. Mai',
+                                             'label_en':'May 2',
+                                             'date':'2016-05-02' },
+    '03.05.2016': { 'id': eventId +'-day-2', 'label_de':'3. Mai',
+                                             'label_en':'May 3',
+                                             'date':'2016-05-03' },
+    '04.05.2016': { 'id': eventId + '-day-3', 'label_de':'4. Mai',
+                                              'label_en':'May 4',
+                                              'date':'2016-05-04' },
 };
+
 
 var allMaps = {
 	'map-level0': {
@@ -218,58 +234,57 @@ exports.scrape = function (callback) {
 			});
 
 			var fakeSessions = [
-				// {
-		//               "updated_date": "08.04.2015 - 10:56",
-		//               "nid": "2666",
-		//               "type": "session",
-		//               "uri": "http://re-publica.de/session/welcome",
-		//               "title": "Welcome!",
-		//               "label": "Welcome!",
-		//               "datetime": "05.05.2015 - 09:00 bis 10:00",
-		//               "start": "09:00",
-		//               "end": "10:00",
-		//               "room_id": "5591",
-		//               "room": "stage 1",
-		//               "speaker_uids": [
-		//                 "2460",
-		//                 "2472",
-		//                 "2419",
-		//                 "2219",
-		//                 "2520"
-		//               ],
-		//               "speaker_names": [
-		//                 "Andreas Gebhard",
-		//                 "Tanja Haeusler",
-		//                 "Markus Beckedahl",
-		//                 "Johnny Haeusler",
-		//                 "Elmar Giglinger"
-		//               ],
-		//               "category_id": "31",
-		//               "category": "re:publica",
-		//               "format_id": "10",
-		//               "format": "Vortrag",
-		//               "level_id": "3",
-		//               "level": "Beginner",
-		//               "language_id": "5",
-		//               "language": "Deutsch",
-		//               "curator_ids": [],
-		//               "curator_names": [],
-		//               "description_short": "Opening ceremony for re:publica and MEDIA CONVENTION.",
-		//               "description": "",
-		//               "video": [
-		//                 "http://www.youtube.com/watch?v=hfjNOk97qn8"
-		//               ],
-		//               "event_title": "re:publica 2015",
-		//               "event_date": "",
-		//               "event_description": "Finding Europe"
-		//             }
+				{
+		              "updated_date": "02.05.2015 - 10:56",
+                      "nid": "2666",
+                      "type": "session",
+                      "uri": "http://15.re-publica.de/session/welcome",
+                      "title": "Welcome rp15!",
+                      "label": "Welcome rp15!",
+                      "datetime": "02.05.2016 - 09:00 bis 10:00",
+                      "start": "09:00",
+                      "end": "10:00",
+                      "room_id": "5591",
+                      "room": "stage 1",
+                      "speaker_uids": 
+                        "2460, 2472, 2419, 2219, 2520"
+                      ,
+                      "speaker_names": [
+                        "Andreas Gebhard",
+                        "Tanja Haeusler",
+                        "Markus Beckedahl",
+                        "Johnny Haeusler",
+                        "Elmar Giglinger"
+                      ],
+                      "category_id": "31",
+                      "category": "re:publica",
+                      "format_id": "10",
+                      "format": "Vortrag",
+                      "level_id": "3",
+                      "level": "Beginner",
+                      "language_id": "5",
+                      "language": "Deutsch",
+                      "curator_ids": [],
+                      "curator_names": [],
+                      "description_short": "Opening ceremony for re:publica and MEDIA CONVENTION.",
+                      "description": "",
+                      "video": [
+                        "http://www.youtube.com/watch?v=hfjNOk97qn8"
+                      ],
+                      "event_title": "re:publica 2015",
+                      "event_date": "",
+                      "event_description": "Finding Europe"
+                    }
 		];
+
 
 			Array.prototype.push.apply(sessionList, fakeSessions);
 
 
 			sessionList.forEach(function (session) {
 				if (session.nid == "") return; // skip invalid sessions
+
+                console.log(session);
 
 				var begin = parseDateTime(session.datetime, session.start);
 				var end = parseDateTime(session.datetime, session.end);
@@ -330,6 +345,9 @@ exports.scrape = function (callback) {
 					'enclosures': [],
 					'links': links
 				}
+                
+                console.log("entry: ", entry);
+                
 				if (removeTimesAndLocations) {
 					if (session.nid.toString()[2] != "2") {
 						entry["begin"] = null;
@@ -534,7 +552,7 @@ function parseFormat(text) {
 	var format = allFormats[text];
 	if (format) return format;
 	console.error('Unknown Format "'+text+'"');
-	return allLevels["Vortrag"];
+	return allFormats["Vortrag"];
 }
 
 function parseLevel(text) {
