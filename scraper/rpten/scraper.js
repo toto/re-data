@@ -234,47 +234,47 @@ exports.scrape = function (callback) {
 			});
 
 			var fakeSessions = [
-				{
-		              "updated_date": "02.05.2015 - 10:56",
-                      "nid": "2666",
-                      "type": "session",
-                      "uri": "http://15.re-publica.de/session/welcome",
-                      "title": "Welcome rp15!",
-                      "label": "Welcome rp15!",
-                      "datetime": "02.05.2016 - 09:00 bis 10:00",
-                      "start": "09:00",
-                      "end": "10:00",
-                      "room_id": "5591",
-                      "room": "stage 1",
-                      "speaker_uids": 
-                        "2460, 2472, 2419, 2219, 2520"
-                      ,
-                      "speaker_names": [
-                        "Andreas Gebhard",
-                        "Tanja Haeusler",
-                        "Markus Beckedahl",
-                        "Johnny Haeusler",
-                        "Elmar Giglinger"
-                      ],
-                      "category_id": "31",
-                      "category": "re:publica",
-                      "format_id": "10",
-                      "format": "Vortrag",
-                      "level_id": "3",
-                      "level": "Beginner",
-                      "language_id": "5",
-                      "language": "Deutsch",
-                      "curator_ids": [],
-                      "curator_names": [],
-                      "description_short": "Opening ceremony for re:publica and MEDIA CONVENTION.",
-                      "description": "",
-                      "video": [
-                        "http://www.youtube.com/watch?v=hfjNOk97qn8"
-                      ],
-                      "event_title": "re:publica 2015",
-                      "event_date": "",
-                      "event_description": "Finding Europe"
-                    }
+				// {
+//                       "updated_date": "02.05.2015 - 10:56",
+//                       "nid": "2666",
+//                       "type": "session",
+//                       "uri": "http://15.re-publica.de/session/welcome",
+//                       "title": "Welcome rp15!",
+//                       "label": "Welcome rp15!",
+//                       "datetime": "02.05.2016 - 09:00 bis 10:00",
+//                       "start": "09:00",
+//                       "end": "10:00",
+//                       "room_id": "5591",
+//                       "room": "stage 1",
+//                       "speaker_uids":
+//                         "2460, 2472, 2419, 2219, 2520"
+//                       ,
+//                       "speaker_names": [
+//                         "Andreas Gebhard",
+//                         "Tanja Haeusler",
+//                         "Markus Beckedahl",
+//                         "Johnny Haeusler",
+//                         "Elmar Giglinger"
+//                       ],
+//                       "category_id": "31",
+//                       "category": "re:publica",
+//                       "format_id": "10",
+//                       "format": "Vortrag",
+//                       "level_id": "3",
+//                       "level": "Beginner",
+//                       "language_id": "5",
+//                       "language": "Deutsch",
+//                       "curator_ids": [],
+//                       "curator_names": [],
+//                       "description_short": "Opening ceremony for re:publica and MEDIA CONVENTION.",
+//                       "description": "",
+//                       "video": [
+//                         "http://www.youtube.com/watch?v=hfjNOk97qn8"
+//                       ],
+//                       "event_title": "re:publica 2015",
+//                       "event_date": "",
+//                       "event_description": "Finding Europe"
+//                     }
 		];
 
 
