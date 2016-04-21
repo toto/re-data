@@ -117,20 +117,24 @@ var csvData = fs.readFileSync(__dirname + "/pois.csv");
 
 // we now supply a order preference with the location
 var locationOrderPreference = [
-		eventId + '-location-5591', // stage 1
-		eventId + '-location-5929', // stage 2
-		eventId + '-location-5930', // stage 3
-		eventId + '-location-5931', // stage 4
-		eventId + '-location-5932', // stage 5
-		eventId + '-location-5933', // stage 6
-		eventId + '-location-5934', // stage 7
-		eventId + '-location-5935', // stage 8
-		eventId + '-location-5936', // stage 9
-		eventId + '-location-5937', // stage 10
+		eventId + '-location-10305', // stage 1
+		eventId + '-location-10306', // stage 2
+		eventId + '-location-10336', // stage 3
+		eventId + '-location-10338', // stage 4
+		eventId + '-location-10339', // stage 5
+		eventId + '-location-10340', // stage 6
+		eventId + '-location-10341', // stage 7
+		eventId + '-location-10456', // stage 8
+		eventId + '-location-10457', // stage 9
+		eventId + '-location-10458', // stage L
 		eventId + '-location-5938', // stage 11
-		eventId + '-location-5940', // stage J
-		eventId + '-location-5939', // stage T
-		eventId + '-location-6144', // Makerspace rp15     
+		eventId + '-location-10460', // stage J
+		eventId + '-location-10459', // stage T
+		eventId + '-location-10461', // Makerspace rp15     
+    	eventId + '-location-10736', // Lightning Talks 1
+    	eventId + '-location-10737', // Lightning Talks 2
+    	eventId + '-location-10739', // Meetups 1
+    	eventId + '-location-10740', // Meetups 2         
 		eventId + '-location-6145', // MIZ rp15
         eventId + '-location-6148', // re: rp15
 		eventId + '-location-2708', // store
