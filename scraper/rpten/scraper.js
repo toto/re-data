@@ -14,7 +14,9 @@ var removeTimesAndLocations = false;
 // Livestream test
 var streamURLs = {
 	"rp14-location-2594": "http://delive.artestras.cshls.lldns.net/artestras/contrib/delive.m3u8",
-	"rp14-location-2595": "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8"
+	"rp14-location-2595": "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8",
+    "rpten-location-10341": "http://alex-stream.rosebud-media.de:80/live/smil:alexlivetv.smil/playlist.m3u8", // Stage 7 Media Convention
+    "rpten-location-10339": "http://alex.rosebud-media.de/event/_definst_/smil:alexevent.smil/playlist.m3u8" // Stage 5 Media Convention    
 };
 
 var allTracks = {
@@ -123,7 +125,7 @@ var locationOrderPreference = [
 		eventId + '-location-10338', // stage 4
 		eventId + '-location-10339', // stage 5
 		eventId + '-location-10340', // stage 6
-		eventId + '-location-10341', // stage 7
+		eventId + '-location-10341', // stage 7, media conventon
 		eventId + '-location-10456', // stage 8
 		eventId + '-location-10457', // stage 9
 		eventId + '-location-10458', // stage L
@@ -361,9 +363,9 @@ exports.scrape = function (callback) {
 					}
 				}
 				
-				if (entry.location) {
+				if (entry.location && entry.day) {
 					var liveStreamURL = streamURLs[entry.location.id];
-					if (liveStreamURL) {
+					if (liveStreamURL && (entry.day.id == "rpten-day-1" || entry.day.id == "rpten-day-2")) {
 						entry.enclosures.push({
 							"url": liveStreamURL,
 							"mimetype": "application/x-mpegURL",
