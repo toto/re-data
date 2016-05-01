@@ -30,11 +30,13 @@ var allTracks = {
 	'Politics & Society':     { id:'politics-society',    label_de:'Politik & Gesellschaft', 		label_en:'Politics & Society'   , color:[92, 57, 114, 1.0] }, //
 're:cord Musicday':       { id:'re-cord-musicday',    label_de:'re:cord Musicday',       		label_en:'re:cord Musicday'     , color:[51.0, 204.0, 102.0, 1.0] }, //
     'Health':                 { id:'health',           label_de:'Health',              		label_en:'Health'            , color:[139, 0, 23, 1.0] },	
+    're:health':                 { id:'health',           label_de:'Health',              		label_en:'Health'            , color:[139, 0, 23, 1.0] },	    
 	're:publica':             { id:'re-publica',          label_de:'re:publica',              		label_en:'re:publica'            , color:[0, 0, 0, 1.0] },  //
 're:think Mobility':      { id:'re-think-mobility',   label_de:'re:think Mobility',      		label_en:'re:think Mobility'    , color:[102.0, 156.0, 44.0, 1.0] },		
 	'Science & Technology':   { id:'science-technology',  label_de:'Wissenschaft & Technik', 		label_en:'Science & Technology' , color:[146, 132, 7, 1.0] },  //
 	'Research & Education':   { id:'research-education',  label_de:'Forschung & Bildung',    		label_en:'Research & Education' , color:[83, 78, 192, 1.0] },//
-'Other':                  { id:'other',               label_de:'Other',                  		label_en:'Other'                , color:[0, 0, 0, 1.0] }
+    'Other':                  { id:'other',               label_de:'Other',                  		label_en:'Other'                , color:[0, 0, 0, 1.0] },
+    "Global Innovation Gathering (GIG)": { id:'global-innovation-gathering-gig', label_de:'Global Innovation Gathering (GIG)', label_en:'Global Innovation Gathering (GIG)', color:[0, 0, 0, 1.0] }
 };
 
 var allFormats = {
@@ -158,14 +160,14 @@ exports.scrape = function (callback) {
 	require('../lib/json_requester').get(
 		{
 			urls: {
-				sessions: 'https://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553 rp15: 3013
+				sessions: 'https://re-publica.de/rest/sessions.json?args[0]=6553', // rpTEN id: 6553 rp15: 3013
 				speakers: 'https://re-publica.de/rest/speakers.json?args[0]=6553' // rpTEN id: 6553 rp15: 3013
 			}
 		},
 		function (result) {
 			var data = [];
 
-			var sessionList  = result.sessions.items;
+			var sessionList  = result.sessions;
 			var speakerList  = result.speakers;
 			var ytPlaylist   = [];
 
@@ -290,10 +292,10 @@ exports.scrape = function (callback) {
 			sessionList.forEach(function (session) {
 				if (session.nid == "") return; // skip invalid sessions
 
-                console.log(session);
+//                console.log(session);
 
-				var begin = parseDateTime(session.datetime, session.start);
-				var end = parseDateTime(session.datetime, session.end);
+				var begin = parseDateTime(session.start_iso)
+				var end = parseDateTime(session.end_iso)
 				var duration = (end - begin) / 1000;
 				if (duration < 0) return;
 				
@@ -304,7 +306,7 @@ exports.scrape = function (callback) {
 				if (ytLink) {
 					links.push(ytLink);
 				}
-                console.log(session["video"]);
+                // console.log(session["video"]);
                 var videos = session.video;
 				if (typeof(session["video"]) === 'string') {	
                     videos = [videos];
@@ -330,18 +332,18 @@ exports.scrape = function (callback) {
 				});
 				
 
-				console.log("session:", session.nid);
+                // console.log("session:", session.nid);
 
 				var entry = {
 					'id': eventId + '-session-' + session.nid,
 					'title': session.title,
-					'abstract': session.description_short,
-					'description': session.description,
+					'abstract': typeof(session.description_short) == "string" ? removeHTMLTags(session.description_short) : null,
+					'description': typeof(session.description) == "string" ? removeHTMLTags(session.description) : null,
 					'url': permalink,
 					'begin': begin,
 					'end': end,
 					'duration': duration,
-					'day': parseDay(session.datetime),
+					'day': parseDay(session.start_iso),
 					'location': parseLocation(locationMap, session.room_id),
 					'track': parseTrack(session.category),
 					'format': parseFormat(session.format),
@@ -352,7 +354,7 @@ exports.scrape = function (callback) {
 					'links': links
 				}
                 
-                console.log("entry: ", entry);
+                // console.log("entry: ", entry);
                 
 				if (removeTimesAndLocations) {
 					if (session.nid.toString()[2] != "2") {
@@ -417,17 +419,19 @@ function toArray(obj) {
 	return Object.keys(obj).map(function (key) { return obj[key] })
 }
 
-function parseDay(dateString) {
-	if (dateString == '') return false;
+function parseDay(isoDateString) {
+	if (typeof(isoDateString) != "string") return null;
 
-	var dateMatcher = /^(\d\d)\.(\d\d)\.(\d\d\d\d)/;
-	dateMatcher.exec(dateString);
-	var day = RegExp.$1;
-	var month = RegExp.$2;
-	var year = RegExp.$3;
+    var date = new Date(isoDateString);
+    var day = date.getDate();
+    if (day < 10) day = "0" + day;
+    var month = date.getMonth() + 1;
+    if (month < 10) month = "0" + month; 
+    var year =  date.getFullYear();
 
+    console.log("DAY:" + day+'.'+month+'.'+year);
 	var dayDict = allDays[day+'.'+month+'.'+year];
-	if (dayDict == undefined) return false;
+	if (dayDict == undefined) return null;
 	return dayDict
 }
 
@@ -479,7 +483,7 @@ function linkFromYouTubeEntry(entry) {
  		"type": "recording"
  };
 
-	console.log(result);
+//    console.log(result);
 
  return result;
 }
@@ -499,27 +503,11 @@ function parseDate(text) {
 	return date;
 }
 
-function parseDateTime(date, time) {
-	if ((date == '') && (time == '')) return null;
-
-	var dateMatcher = /^(\d+)\.(\d+)\.(\d\d\d\d) /;
-	dateMatcher.exec(date);
+function parseDateTime(isodatetime) {
+	if (typeof(isodatetime) != "string") return null;
 
 
-	var day = RegExp.$1;
-	var month = RegExp.$2;
-	var year = RegExp.$3;
-
-	var timeMatcher = /(\d+)\:(\d+)/
-	timeMatcher.exec(time);
-	var hour = RegExp.$1;
-	var minute = RegExp.$2;
-
-	// we parse the date stirng to ensure timezone compatibility if run on a computer
-	// which is not in CEST as the conference.
-	var dateString = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + "00+02:00";
-
-	var date = new Date(dateString);
+	var date = new Date(isodatetime);
 	var newMillis = date.getTime() + sessionStartDateOffsetMilliSecs;
 	date.setTime(newMillis);
 	return date;
@@ -548,9 +536,10 @@ function parseLocation(locationMap, roomid) {
 
 
 function parseTrack(text) {
-	var track = allTracks[text];
+    var textWithoutEntities = removeHTMLTags(text).replace("&amp;", "&");
+	var track = allTracks[textWithoutEntities];
 	if (track) return track;
-	console.error('Unknown Track "'+text+'"');
+	console.error('Unknown Track "'+textWithoutEntities+'"');
 	return allTracks["re:publica"];
 }
 
