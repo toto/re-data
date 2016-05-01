@@ -159,14 +159,14 @@ exports.scrape = function (callback) {
 		{
 			urls: {
 				sessions: 'https://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553 rp15: 3013
-				speakers: 'https://re-publica.de/event/6553/json/speakers' // rpTEN id: 6553 rp15: 3013
+				speakers: 'https://re-publica.de/rest/speakers.json?args[0]=6553' // rpTEN id: 6553 rp15: 3013
 			}
 		},
 		function (result) {
 			var data = [];
 
 			var sessionList  = result.sessions.items;
-			var speakerList  = result.speakers.items;
+			var speakerList  = result.speakers;
 			var ytPlaylist   = [];
 
 			var ytVideoMap  = {};
@@ -197,7 +197,7 @@ exports.scrape = function (callback) {
 					'organization_url': speaker.org_uri,
 					'position': speaker.position,
 					'sessions': [],
-					'links': parseSpeakerLinks(speaker.link_uris, speaker.link_labels)
+					'links': parseSpeakerLinks(speaker.links)
 				}
 				speakerMap[entry.id] = entry;
 				addEntry('speaker', entry);
@@ -598,28 +598,21 @@ function parseSpeakers(speakerMap, speakeruids) {
 	return speakers;
 }
 
-function parseSpeakerLinks(linkUrls, linkLabels) {
-	if (typeof(linkUrls) === typeof("")) {
-		linkUrls = linkUrls.split(",").map(function (item) {
-			return item.trim();
-		});
-	}
-	if (typeof(linkLabels) === typeof("")) {
-		linkLabels = linkLabels.split(",").map(function (item) {
-			return item.trim();
-		});
-	}	
+function parseSpeakerLinks(sourceLinks) {
 	// google+ URLs are so ugly, what parsing them is non trivial, so we ignore them for now
 	var linkTypes = { 'github': /^https?\:\/\/github\.com\/(\w+)$/i,
 					  'twitter': /^https?\:\/\/twitter\.com\/(\w+)$/i,
 					  'facebook': /^https?\:\/\/facebook\.com\/(\w+)$/i,
 					  'app.net': /^https?\:\/\/(alpha\.)?app.net\.com\/(\w+)$/i };
 
-	var links = [];
+    var links = [];
+    
 
-	for (var i = 0; i < linkUrls.length; i++) {
-		var linkURL = linkUrls[i];
-		var label = linkLabels[i];
+	for (var i = 0; i < sourceLinks.length; i++) {
+		var linkURL = sourceLinks[i].url;
+        if (!linkURL) continue;
+        
+		var label = sourceLinks[i].title;
 		var username = false;
 		var service = 'web';
 
