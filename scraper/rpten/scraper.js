@@ -1,5 +1,6 @@
 var eventId = 'rpten';
 
+var ent = require('ent');
 var fs = require('fs');
 var path = require('path');
 var parseCSV = require('csv-parse');
@@ -191,7 +192,7 @@ exports.scrape = function (callback) {
 
 				var entry = {
 					'id': eventId + '-speaker-'+speaker.uid,
-					'name': speakerName,
+					'name': ent.decode(speakerName),
 					'photo': (speaker.image.src != undefined ? speaker.image.src : speaker.image),
 					'url': makeSpeakerURL(speaker),
 					'biography': typeof(speaker.description_short) == "string" ? removeHTMLTags(speaker.description_short) : null,
@@ -321,7 +322,7 @@ exports.scrape = function (callback) {
 							// https://www.youtube.com/v/12BYSqVGCUk
 							var result =  {
 					 			"thumbnail": "https://img.youtube.com/vi/" + RegExp.$1 + "/hqdefault.jpg",
-					 			"title": session.title,
+					 			"title": ent.decode(session.title),
 					 			"url": "https://www.youtube.com/v/" + RegExp.$1,
 					 			"service": "youtube",
 					 			"type": "recording"
@@ -336,7 +337,7 @@ exports.scrape = function (callback) {
 
 				var entry = {
 					'id': eventId + '-session-' + session.nid,
-					'title': session.title,
+					'title': ent.decode(session.title),
 					'abstract': typeof(session.description_short) == "string" ? removeHTMLTags(session.description_short) : null,
 					'description': typeof(session.description) == "string" ? removeHTMLTags(session.description) : null,
 					'url': permalink,
@@ -568,7 +569,7 @@ function removeHTMLTags(text) {
     var regex = /(<([^>]+)>)/ig
     ,   body = text
     ,   result = body.replace(regex, "");
-    return result
+    return ent.decode(result);
 }
 
 function parseSpeakers(speakerMap, speakeruids) {
@@ -585,7 +586,7 @@ function parseSpeakers(speakerMap, speakeruids) {
 	speakeruids.forEach(function (speakerId) {
 		var speaker = speakerMap[eventId + '-speaker-'+speakerId];
 		if (speaker != undefined) {
-			speakers.push({'id': speaker.id, 'name': speaker.name});
+			speakers.push({'id': speaker.id, 'name': ent.decode(speaker.name)});
 		} else {
 			console.error("unknown speaker " + speakerId);
 		}
