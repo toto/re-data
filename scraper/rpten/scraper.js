@@ -191,7 +191,7 @@ exports.scrape = function (callback) {
 					'id': eventId + '-speaker-'+speaker.uid,
 					'name': speakerName,
 					'photo': (speaker.image.src != undefined ? speaker.image.src : speaker.image),
-					'url': speaker.uri,
+					'url': null,
 					'biography': speaker.description_short,
 					'organization': speaker.org,
 					'organization_url': speaker.org_uri,
