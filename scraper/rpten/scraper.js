@@ -158,8 +158,8 @@ exports.scrape = function (callback) {
 	require('../lib/json_requester').get(
 		{
 			urls: {
-				sessions: 'http://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553 rp15: 3013
-				speakers: 'http://re-publica.de/event/6553/json/speakers' // rpTEN id: 6553 rp15: 3013
+				sessions: 'https://re-publica.de/event/6553/json/sessions', // rpTEN id: 6553 rp15: 3013
+				speakers: 'https://re-publica.de/event/6553/json/speakers' // rpTEN id: 6553 rp15: 3013
 			}
 		},
 		function (result) {
