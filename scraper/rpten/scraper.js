@@ -191,7 +191,7 @@ exports.scrape = function (callback) {
 					'id': eventId + '-speaker-'+speaker.uid,
 					'name': speakerName,
 					'photo': (speaker.image.src != undefined ? speaker.image.src : speaker.image),
-					'url': null,
+					'url': makeSpeakerURL(speaker),
 					'biography': typeof(speaker.description_short) == "string" ? speaker.description_short : null,
 					'organization':  typeof(speaker.org) == "string" ? speaker.org : null,
 					'organization_url': typeof(speaker.org_uri) == "string" ? speaker.org_uri : null,
@@ -596,6 +596,11 @@ function parseSpeakers(speakerMap, speakeruids) {
 	})
 
 	return speakers;
+}
+
+function makeSpeakerURL(speakerJSON) {
+    if (typeof(speakerJSON.uid) != "string") return null;
+    return "https://re-publica.de/member/" + speakerJSON.uid;    
 }
 
 function parseSpeakerLinks(sourceLinks) {
