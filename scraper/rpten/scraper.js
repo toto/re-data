@@ -192,7 +192,7 @@ exports.scrape = function (callback) {
 					'name': speakerName,
 					'photo': (speaker.image.src != undefined ? speaker.image.src : speaker.image),
 					'url': null,
-					'biography': speaker.description_short,
+					'biography': typeof(speaker.description_short) == "string" ? speaker.description_short : null,
 					'organization':  typeof(speaker.org) == "string" ? speaker.org : null,
 					'organization_url': typeof(speaker.org_uri) == "string" ? speaker.org_uri : null,
 					'position': typeof(speaker.position) == "string" ? speaker.position : null,
