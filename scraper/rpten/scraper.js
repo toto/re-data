@@ -430,7 +430,6 @@ function parseDay(isoDateString) {
     if (month < 10) month = "0" + month; 
     var year =  date.getFullYear();
 
-    console.log("DAY:" + day+'.'+month+'.'+year);
 	var dayDict = allDays[day+'.'+month+'.'+year];
 	if (dayDict == undefined) return null;
 	return dayDict
