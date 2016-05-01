@@ -88,7 +88,7 @@ var allDays = {
 var allMaps = {
 	'map-level0': {
 		'event': eventId,
-		'id': eventId + "-map-" + "level0",
+		'id': eventId + "-map-level0",
 		'type': "map",
 		'label_de': "Station Berlin",
 		'label_en': "Station Berlin",
@@ -98,15 +98,15 @@ var allMaps = {
 		"is_indoor": true,		
 		"floor": 0,
 		"order_index": 0,
-		"area": {"width": 7872.0, 
-		         "height": 2814.0},
+		"area": {"width": 4193.0, 
+		         "height": 1949.0},
 		"tiles": {
-                    "base_url": "http://data.conference.bits.io/maps/rp15/station-berlin",
-                    "large_image_url": "http://data.conference.bits.io/maps/rp15/station-berlin/mini.png",
+                    "base_url": "http://data.conference.bits.io/maps/rpten/station-berlin",
+                    "large_image_url": "http://data.conference.bits.io/maps/rpten/station-berlin/mini.png",
                     "tile_size": 512,
                     "tile_file_extension": "png",
-                    "size": {"width": 7872,
-                             "height": 2814}
+                    "size": {"width": 4193.0,
+                             "height": 1949.0}
                 },
 	    "pois": []
 	}
