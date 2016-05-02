@@ -16,7 +16,7 @@ var removeTimesAndLocations = false;
 var streamURLs = {
 	"rp14-location-2594": "http://delive.artestras.cshls.lldns.net/artestras/contrib/delive.m3u8",
 	"rp14-location-2595": "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8",
-    "rpten-location-10341": "http://alex-stream.rosebud-media.de:80/live/smil:alexlivetv.smil/playlist.m3u8", // Stage 7 Media Convention
+    // "rpten-location-10341": "http://alex-stream.rosebud-media.de/live/smil:alexlivetv.smil/playlist.m3u8", // Stage 7 Media Convention
     "rpten-location-10339": "http://alex.rosebud-media.de/event/_definst_/smil:alexevent.smil/playlist.m3u8" // Stage 5 Media Convention    
 };
 
