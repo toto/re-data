@@ -324,7 +324,7 @@ exports.scrape = function (callback) {
 							var result =  {
 					 			"thumbnail": "https://img.youtube.com/vi/" + RegExp.$1 + "/hqdefault.jpg",
 					 			"title": ent.decode(session.title),
-					 			"url": "https://www.youtube.com/v/" + RegExp.$1,
+					 			"url": videoURL,
 					 			"service": "youtube",
 					 			"type": "recording"
 							};
