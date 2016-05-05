@@ -59,6 +59,18 @@ var allLanguages = {
 	'Deutsch':          { id:'de',    label_de:'Deutsch',          label_en:'German'          }
 };
 
+// media convention videos
+var videoMap = {
+    "rpten-session-10379": "https://www.youtube.com/embed/GM2SMruNpjQ", // Preisverleihung "YOUR TURN - Der Video-Creator Wettbewerb"
+    "rpten-session-10592": "https://www.youtube.com/embed/NsuDLjcxD6Y", // Die Macht der Bilder – Zwischen Pressefreiheit und Menschenwürde
+    "rpten-session-9367": "https://www.youtube.com/embed/MZzxPPXni40", // What's up TV? - Television from abroad
+    "rpten-session-10419": "https://www.youtube.com/embed/7d79CSnW3RM", // Halt die Fresse: Hate Speech!
+    "rpten-session-10369": "https://www.youtube.com/embed/0Ym4sQB4TRk", // Sind wir schon drin? Virtual Reality Projekte und ihre Plattformen
+    "rpten-session-10414": "https://www.youtube.com/embed/EX9y1L6CKe4", // Hauptsache authentisch? Instagram, Snapchat und Co. entzaubert.
+    "rpten-session-9774": "https://www.youtube.com/embed/UpcJ6k7a1DM", // Games go Hollywood: Spielekonzerne als Film- und TV-Produzenten
+    "rpten-session-10427": "https://www.youtube.com/embed/W8fVPd1Vfq8" // Wer zahlt für Nachrichtenvideos im Netz?
+};
+
 // rp15
 // var allDays = {
 //     '05.05.2015': { 'id': eventId +'-day-1', 'label_de':'5. Mai',
