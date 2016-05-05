@@ -163,9 +163,7 @@ exports.scrape = function (callback) {
 		{
 			urls: {
 				sessions: 'https://re-publica.de/rest/sessions.json?args[0]=6553', // rpTEN id: 6553 rp15: 3013
-				speakers: 'https://re-publica.de/rest/speakers.json?args[0]=6553', // rpTEN id: 6553 rp15: 3013
-                sendezentrumSessions: 'https://frab.das-sendezentrum.de/de/rpten/public/schedule.json',
-                sendezentrumSpeakers: 'https://frab.das-sendezentrum.de/de/rpten/public/speakers.json'
+				speakers: 'https://re-publica.de/rest/speakers.json?args[0]=6553' // rpTEN id: 6553 rp15: 3013
 			}
 		},
 		function (result) {
@@ -209,15 +207,6 @@ exports.scrape = function (callback) {
 				addEntry('speaker', entry);
 			});
 
-            // speaker Sendezentrum
-            var schedule_speakers = result.sendezentrumSpeakers.schedule_speakers.speakers;
-            schedule_speakers.forEach(function (speakerJSON) {
-                var entry = parseSpeakerFromFrab(speakerJSON, "https://frab.das-sendezentrum.de", "sendezentrum");
-				speakerMap[entry.id] = entry;
-				addEntry('speaker', entry);
-            });
-
-
 			// first get rooms out of the sessions
 			sessionList.forEach(function (session) {
 				
@@ -253,12 +242,6 @@ exports.scrape = function (callback) {
 
 				addEntry('location', entry);
 			});
-            
-            // Sendezentrums Session
-            var days = result.sendezentrumSessions.schedule.conference.days;
-            days.forEach(function (day) {
-                
-            });
 
 			var fakeSessions = [
 				// {
@@ -341,7 +324,7 @@ exports.scrape = function (callback) {
 							var result =  {
 					 			"thumbnail": "https://img.youtube.com/vi/" + RegExp.$1 + "/hqdefault.jpg",
 					 			"title": ent.decode(session.title),
-					 			"url": videoURL,
+					 			"url": "https://www.youtube.com/v/" + RegExp.$1,
 					 			"service": "youtube",
 					 			"type": "recording"
 							};
@@ -732,50 +715,3 @@ function parsePOIsFromCSV(data, callback) {
 			callback(pois);		
 	});
 };
-
-function mkID(prefix, id) {
-    return eventId + "-" + prefix  + "-" + id;
-}
-
-function parseSpeakerFromFrab(speakerJSON, imageURLPrefix, prefix) {
-    
-	var bio = "";
-	if (speakerJSON.abstract) {
-		bio = speakerJSON.abstract;
-	}
-	if (speakerJSON.description) {
-		bio = bio + "\n\n" + speakerJSON.description;
-	}
-    
-	var links = [];
-	
-	if (speakerJSON.links) {
-		speakerJSON.links.forEach(function (link) {
-            var url = link.url
-            if (url.indexOf("http") != 0) {           
-                 url = "http://" + url;
-            } 
-			links.push({"url": url,
-				        "title": link.title,
-				        "service": "web",
-				        "type": "speaker-link"});
-		});
-	}
-    
-	var result = {
-		"id": mkID(prefix, speakerJSON.id),
-		"type": "speaker",
-		"event": eventId,
-		"name": speakerJSON.full_public_name,
-		"biography": bio,
-		"links": links,
-		"sessions": [] // fill me later
-	};
- 
-	if (speakerJSON.image) {
-		var path = speakerJSON.image;
-		path = path.replace(/\/medium\//,'/large/');
-		result['photo'] = imageURLPrefix + path;
-	}
-    return result;
-}
