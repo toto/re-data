@@ -318,13 +318,15 @@ exports.scrape = function (callback) {
 					
 				videos.forEach(function (videoURL) {
 					
-					if (videoURL.match(/^https?\:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9\-\_]+)/i)) {
-						if (RegExp.$1) {
+					if (videoURL.match(/^https?\:\/\/www\.youtube\.com\/watch\?v=(.+)$/i)) {
+                        var videoID = RegExp.$1;                        
+						if (videoID) {
+
 							// https://www.youtube.com/v/12BYSqVGCUk
 							var result =  {
-					 			"thumbnail": "https://img.youtube.com/vi/" + RegExp.$1 + "/hqdefault.jpg",
+					 			"thumbnail": "https://img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
 					 			"title": ent.decode(session.title),
-					 			"url": videoURL,
+					 			"url": "https://www.youtube.com/v/" + videoID + "",
 					 			"service": "youtube",
 					 			"type": "recording"
 							};
