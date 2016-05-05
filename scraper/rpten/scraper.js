@@ -327,6 +327,10 @@ exports.scrape = function (callback) {
                 } else  if (!session["video"]) {
                     videos = [];
                 }
+                var video = videoMap[session.id]
+                if (video) {
+                    videos.push(video);
+                }
 					
 				videos.forEach(function (videoURL) {
 					
