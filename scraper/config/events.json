@@ -131,5 +131,18 @@
 		}],
         "hashtag": "rpTEN",
 		"url": "http://16.re-publica.de/"
+	},
+	{
+		"type": "event",
+		"id": "altconf16",
+		"label": "AltConf 2016",
+		"title": "AltConf",
+		"date": ["2016-06-13","2016-06-17"],
+		"locations": [{
+			"label": "AMC Metreon",
+			"coords": [37.784361,-122.4045953]
+		}],
+        "hashtag": "altconf",
+		"url": "http://altconf.com"
 	}
 ]
