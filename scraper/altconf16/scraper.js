@@ -195,7 +195,7 @@ function parseSession(dict) {
     
     session.id = mkID(session['id']);
     
-	fake video for app review
+    // fake video for app review
     if (session['id'] == 'altconf16--richard-i-don-t-think-you-understand-what-the-product-is-a-designer-s-response-to-silicon-valley') {
         session['links'] = [
             {
