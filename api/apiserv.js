@@ -164,10 +164,12 @@ function replyItem(err, data, query, res) {
 	if (err) {
 		log.critical(err);
 		res.json({ok:false});
+        return;
 	}
 
 	if (data.length != 1) {
 		res.json({ok:false});
+        return;
 	}
 
 	// delete unnecessary fields _id and _rev
