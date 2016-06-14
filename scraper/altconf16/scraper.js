@@ -164,6 +164,8 @@ function parseSpeaker(dict) {
         return session;
     });
     
+    speaker.photo = speaker.photo.replace("http://altconf.com/images/speaker-img/", "http://data.conference.bits.io/maps/altconf/");
+    
 	
 	return speaker;
 }
