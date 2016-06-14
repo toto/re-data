@@ -282,8 +282,8 @@ exports.scrape = function (callback) {
 	require('../lib/json_requester').get(
 		{
 			urls: {
-				sessions: 'https://vonbelow.com/altconf/sessions.json',
-				speakers: 'https://vonbelow.com/altconf/speakers.json'
+				sessions: 'http://data.conference.bits.io/maps/altconf/sessions.json',
+				speakers: 'http://data.conference.bits.io/maps/altconf/speakers.json'
 			}
 		},
 		function (result) {
