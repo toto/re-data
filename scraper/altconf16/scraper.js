@@ -196,18 +196,18 @@ function parseSession(dict) {
     session.id = mkID(session['id']);
     
     // fake video for app review
-    if (session['id'] == 'altconf16--richard-i-don-t-think-you-understand-what-the-product-is-a-designer-s-response-to-silicon-valley') {
-        session['links'] = [
-            {
-            "service": "youtube",
-            "thumbnail": "https://img.youtube.com/vi/taaR3lNZ3Rs/hqdefault.jpg",
-            "title": "Jay Freeman - \"Swift\" 20m Introspecting Apple's WWDC App Using Cycript",
-            "type": "recording",
-            "url": "https://www.youtube.com/v/Ii-02vhsdVk"
-            }
-        ];
-
-    }
+    // if (session['id'] == 'altconf16--richard-i-don-t-think-you-understand-what-the-product-is-a-designer-s-response-to-silicon-valley') {
+    //     session['links'] = [
+    //         {
+    //         "service": "youtube",
+    //         "thumbnail": "https://img.youtube.com/vi/taaR3lNZ3Rs/hqdefault.jpg",
+    //         "title": "Jay Freeman - \"Swift\" 20m Introspecting Apple's WWDC App Using Cycript",
+    //         "type": "recording",
+    //         "url": "https://www.youtube.com/v/Ii-02vhsdVk"
+    //         }
+    //     ];
+    //
+    // }
 	
 	if (!session['format']) {
 		session['format'] = allFormats['talk'];
