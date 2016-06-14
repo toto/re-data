@@ -157,6 +157,8 @@ function parseSpeaker(dict) {
     
     speaker.id = mkID(speaker.id);
     
+    speaker.biography = stripHTML(speaker.biography);
+    
     speaker.sessions = speaker.sessions.map(function (session) {
         session.id = mkID(session.id);
         return session;
@@ -199,7 +201,7 @@ function parseSession(dict) {
 	}
     
     session.id = mkID(session['id']);
-    
+    session.abstract = stripHTML(session.abstract);
     // fake video for app review
     // if (session['id'] == 'altconf16--richard-i-don-t-think-you-understand-what-the-product-is-a-designer-s-response-to-silicon-valley') {
     //     session['links'] = [
@@ -417,6 +419,11 @@ function parseDateTime(date, time) {
 	console.log('Unknown date "'+date+'" and time "'+time+'"');
 	return false
 }
+
+function stripHTML(text) {
+    var regex = /(<([^>]+)>)/ig;
+    return text.replace(regex, "");
+};
 
 function parseSpeakerLinks(linkUrls, linkLabels) {
 
