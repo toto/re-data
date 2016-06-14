@@ -137,6 +137,11 @@ var trackMap = {
 				]			
 };
 
+var sortOrderOfLocations = [
+    "Theatre 2",
+    "Theatre 3"    
+];
+
 function parseSpeaker(dict) {
 	var speaker = dict;
 
@@ -313,12 +318,16 @@ exports.scrape = function (callback) {
 
 			// Additional Data
 			// -----------
-			var index = 0;
-			for (var key in allRooms) {
-				var value = allRooms[key];
-				value['order_index'] = index;
-				index++;				
-			}
+			var moreIDs = sortOrderOfLocations.length;
+			toArray(allRooms).sort().forEach(function (item) {
+				if (sortOrderOfLocations.indexOf(item["id"]) >= 0) {
+					item["order_index"] = sortOrderOfLocations.indexOf(item["id"]);
+				} else {
+					item["order_index"] = moreIDs;
+					moreIDs++;	
+				}
+			});	
+            
 
 			
 			alsoAdd('track', allTracks);
