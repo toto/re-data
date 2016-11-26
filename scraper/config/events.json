@@ -144,5 +144,18 @@
 		}],
         "hashtag": "altconf",
 		"url": "http://altconf.com"
+    },
+	{
+		"type": "event",
+		"id": "33c3",
+		"label": "33C3",
+		"title": "33rd Chaos Communication Congress – Gated Comunities",
+		"date": ["2016-12-27","2016-12-30"],
+		"locations": [{
+			"label": "Congress Center Hamburg",
+			"coords": [53.561583,9.985683]
+		}],
+		"url": "http://events.ccc.de/congress/2016",
+        "hashtag": "33c3"
 	}
 ]
