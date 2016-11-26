@@ -91,13 +91,12 @@ var testVideoURLs = {
 
 // for app review we only show limited innocent content…
 var whitelistedSessionIDs = [
-    // "32c3-7549", // "20 OSCILLATORS IN 20 MINUTES"
-    // "32c3-7387", // "Net Neutrality in Europe"
-    // "32c3-7415", // "Wie Jugendschutzprogramme nicht nur die Jugend schädigen"
-    // "32c3-7238", // "Vector retrogaming"
-    // "32c3-7520", // "Compileroptimierungen für Forth im Microcontroller"
-    // "32c3-7367", // "Ling - High level system programming"
-    // "32c3-7138"  // "G'scheitern"
+"33c3-7811", // Irren ist staatlich
+"33c3-7860", // Welcome to the Anthropocene?
+"33c3-7861", // The Universe Is, Like, Seriously Huge
+"33c3-7873", // SpinalHDL : An alternative hardware description language
+"33c3-7880", // International exchange of tax information
+"33c3-7899" // Berechnete Welt
 ];
 
 var allFormats = {
