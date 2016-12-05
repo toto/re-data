@@ -85,24 +85,24 @@ var sortOrderOfLocations = [
 
 ];
 
-var testVideoURLs = {
-	"33c3-7909": "http://cdn.media.ccc.de/congress/2014/h264-hd/31c3-6582-de-Das_Transparenzportal_Hamburg_hd.mp4" // Talk:Wie Jugendschutzprogramme nicht nur die Jugend schädigen Video: Das Transparenzportal Hamburg
-}; 
+var testVideoURLs = {}
+// 	"33c3-7909": "http://cdn.media.ccc.de/congress/2014/h264-hd/31c3-6582-de-Das_Transparenzportal_Hamburg_hd.mp4" // Talk:Wie Jugendschutzprogramme nicht nur die Jugend schädigen Video: Das Transparenzportal Hamburg
+// };
 
 // for app review we only show limited innocent content…
 var whitelistedSessionIDs = [
-"33c3-7811", // Irren ist staatlich
-"33c3-7860", // Welcome to the Anthropocene?
-"33c3-7861", // The Universe Is, Like, Seriously Huge
-"33c3-7873", // SpinalHDL : An alternative hardware description language
-"33c3-7880", // International exchange of tax information
-"33c3-7899", // Berechnete Welt
-"33c3-7909", // Syrian Archive
-"33c3-7911", // make WiFi fast again    
-"33c3-7922", // Formal Verification of Verilog HDL with Yosys-SMTBMC
-"33c3-7925", // The Nibbletronic
-"33c3-7927", // Lasers in the sky (with asteroids)
-"33c3-7942", // Interplanetary Colonization
+// "33c3-7811", // Irren ist staatlich
+// "33c3-7860", // Welcome to the Anthropocene?
+// "33c3-7861", // The Universe Is, Like, Seriously Huge
+// "33c3-7873", // SpinalHDL : An alternative hardware description language
+// "33c3-7880", // International exchange of tax information
+// "33c3-7899", // Berechnete Welt
+// "33c3-7909", // Syrian Archive
+// "33c3-7911", // make WiFi fast again
+// "33c3-7922", // Formal Verification of Verilog HDL with Yosys-SMTBMC
+// "33c3-7925", // The Nibbletronic
+// "33c3-7927", // Lasers in the sky (with asteroids)
+// "33c3-7942", // Interplanetary Colonization
 ];
 
 var allFormats = {
